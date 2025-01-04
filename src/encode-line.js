@@ -11,7 +11,7 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function encodeLine(str) {
-
+ if (!res) return '';
     let res = '';
     let count = 1;
     let char = str[0];

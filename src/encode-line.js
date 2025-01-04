@@ -24,7 +24,7 @@ function encodeLine(str) {
         }
     }
     
-    return res;
+    return res+ (count==1 ? char : count+char);
 }
 
 module.exports = {

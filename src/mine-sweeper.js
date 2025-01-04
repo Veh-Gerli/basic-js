@@ -23,36 +23,47 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
+const matrix = [
+        [false, false, false],
+        [false, false, false],
+      ];
+
 function minesweeper(matrix) {
-    const rows = matrix.length;
-    const cols = matrix[0].length;
-    const result = Array.from({ length: rows }, () => Array(cols).fill(0));
-
-    // Соседние координаты
-    const directions = [
-        [-1, -1], [-1, 0], [-1, 1],
-        [0, -1],          [0, 1],
-        [1, -1], [1, 0], [1, 1]
-    ];
-
-    for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-            if (matrix[r][c]) { // Если есть мина
-                // Увеличиваем счетчик для соседних ячеек
-                for (const [dr, dc] of directions) {
-                    const newRow = r + dr;
-                    const newCol = c + dc;
-                    // Проверяем, находятся ли соседние ячейки в пределах границ
-                    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-                        result[newRow][newCol]++;
-                    }
+  let resArr = [];
+  for (let i=0; i<matrix.length; i++) {
+  let arr = [];
+    for (let j=0; j<matrix[i].length; j++) {
+        let countMin = 0;
+            
+                
+                if (j<matrix[i].length-2 && matrix[i][j+1]) countMin++;
+                if (j>0 && matrix[i][j-1]) countMin++;
+                
+                if (i>0)
+                {
+                    if (matrix[i-1][j]) countMin++;
+                    if (j<matrix[i].length-2 && matrix[i-1][j+1]) countMin++;
+                    if (j>0 && matrix[i-1][j-1]) countMin++;
                 }
-            }
+                
+                if (i<matrix.length - 2) 
+                {
+                    if (matrix[i+1][j]) countMin++;
+                    if (j<matrix[i].length-2 && matrix[i+1][j+1]) countMin++;
+                    if (j>0 && matrix[i+1][j-1]) countMin++;
+                }
+            
+            
+            arr.push(countMin);
         }
-    }
-
-    return result;
+        
+        resArr.push(arr);
+  }
+    
+  return resArr;
 }
+
+console.log(minesweeper(matrix));
 
 module.exports = {
   minesweeper

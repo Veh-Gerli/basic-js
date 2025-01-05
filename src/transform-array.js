@@ -30,10 +30,9 @@ function transform(arr) {
             resArr[i] = resArr[i + 1];
             notChange = i;
             }
-            else  resArr = resArr.slice(0, i).concat(resArr.slice(i + 1));
+            else resArr = resArr.slice(0, i).concat(resArr.slice(i + 1));
         }
         if (resArr[i] === '--double-prev' ) {
-            console.log(resArr, resArr[i], i, notChange)
             if (notChange !== i-1 && i > 0 ) {
             resArr[i] = resArr[i - 1];
             notChange = i;
@@ -57,10 +56,9 @@ function transform(arr) {
              notChange = i-1;
              i--;
             }  else  resArr = resArr.slice(0, i).concat(resArr.slice(i + 1));
-            
-            console.log(resArr, resArr[i], i, notChange)
          }
     }
+    return resArr;
 }
 
 module.exports = {

@@ -14,9 +14,14 @@ const { NotImplementedError } = require('../extensions/index.js');
  * 
  */
 function transform(arr) {
+    try {
+        if (!Array.isArray(arr))
+        throw `'arr' parameter must be an instance of the Array!`;
+    }
+    catch (err) {
+        return err;
+    }
     let resArr = arr.slice();
-
-    
     for (let i=0; i<resArr.length; i++) {
         if (resArr[i] === '--double-next') { 
             resArr[i] = resArr[i + 1];

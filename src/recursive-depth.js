@@ -17,12 +17,19 @@ class DepthCalculator {
       this.length = 0;
   }
   calculateDepth(arr) {
-    ++this.length;
+        
+    let maxLength = 1;
+    
     arr.forEach( (item) => {
-        if (Array.isArray(item)) this.calculateDepth(item)
+        
+        if (Array.isArray(item)) { 
+          maxLength = this.calculateDepth(item);
+          maxLength++;
+          if (maxLength > this.length) this.length = maxLength;
+        }
     })
     
-    return this.length;
+    return maxLength;
   }
 }
 

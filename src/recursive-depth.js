@@ -14,21 +14,21 @@ const { NotImplementedError } = require('../extensions/index.js');
  */
 class DepthCalculator {
   constructor() {
-      this.length = 0;
+    this.length = 0;
   }
   calculateDepth(arr) {
-        
+
     let maxLength = 1;
-    
-    arr.forEach( (item) => {
-        
-        if (Array.isArray(item)) { 
-          maxLength = this.calculateDepth(item);
-          maxLength++;
-          if (maxLength > this.length) this.length = maxLength;
-        }
+
+    arr.forEach((item) => {
+
+      if (Array.isArray(item)) {
+        maxLength = this.calculateDepth(item);
+        maxLength++;
+        if (maxLength > this.length) this.length = maxLength;
+      }
     })
-    
+
     return maxLength;
   }
 }

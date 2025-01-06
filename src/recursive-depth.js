@@ -23,9 +23,9 @@ class DepthCalculator {
     arr.forEach((item) => {
 
       if (Array.isArray(item)) {
-        maxLength = this.calculateDepth(item);
-        maxLength++;
-        if (maxLength > this.length) this.length = maxLength;
+        this.length = this.calculateDepth(item);
+        this.length++;
+        if (maxLength < this.length) maxLength = this.length;
       }
     })
 

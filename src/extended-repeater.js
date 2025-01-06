@@ -16,33 +16,22 @@ const { NotImplementedError } = require('../extensions/index.js');
  *
  */
 function repeater(str, options) {
-  // Convert str to string if it's not already
   str = String(str);
-  
-  // Set default values for options
-  const repeatTimes = options.repeatTimes || 1;
-  const separator = options.separator || '+';
-  const addition = options.addition !== undefined ? String(options.addition) : '';
-  const additionRepeatTimes = options.additionRepeatTimes || 1;
-  const additionSeparator = options.additionSeparator || '|';
 
-  // Create the addition part
-  const additionPart = Array(additionRepeatTimes).fill(addition).join(additionSeparator);
+  let addition = options.addition !== undefined ? String(options.addition) : '';
+  let additionPart = Array(options.additionRepeatTimes || 1).fill(addition).join(options.additionSeparator || '|');
 
-  // Create the final result
-  const result = Array(repeatTimes).fill(str + additionPart).join(separator);
-
-  return result;
+  return Array(options.repeatTimes || 1).fill(str + additionPart).join(options.separator || '+');
 }
 
 // Example usage:
-console.log(repeater('STRING', { 
-  repeatTimes: 3, 
-  separator: '**', 
-  addition: 'PLUS', 
-  additionRepeatTimes: 3, 
-  additionSeparator: '00' 
-})); 
+console.log(repeater('STRING', {
+  repeatTimes: 3,
+  separator: '**',
+  addition: 'PLUS',
+  additionRepeatTimes: 3,
+  additionSeparator: '00'
+}));
 
 module.exports = {
   repeater

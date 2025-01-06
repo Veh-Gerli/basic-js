@@ -25,59 +25,53 @@ class VigenereCipheringMachine {
   }
 
   encrypt(message, key) {
-    if (!message || !key) {
-      throw new Error('Incorrect arguments!');
-    }
-
-    message = message.toUpperCase();
+    if (!message || !key) throw new Error('Incorrect arguments!');
     key = key.toUpperCase();
-    let result = '';
-    let keyIndex = 0;
-    let keyLength = key.length;
+    let indKey = 0;
 
-    for (let i = 0; i < message.length; i++) {
-      const char = message[i];
+    message = message.split('').map((item, ind, arr) => {
 
-      if (char >= 'A' && char <= 'Z') {
-        const messageCode = char.charCodeAt(0) - 'A'.charCodeAt(0);
-        const keyCode = key[keyIndex % keyLength].charCodeAt(0) - 'A'.charCodeAt(0);
-        const encryptedChar = String.fromCharCode(((messageCode + keyCode) % 26) + 'A'.charCodeAt(0));
-        result += encryptedChar;
-        keyIndex++;
-      } else {
-        result += char; // Non-alphabetic characters are added unchanged
+      item = item.toUpperCase();
+      if (item >= 'A' && item <= 'Z') {
+        // console.log(item, '=', '           ', key[indKey % key.length]);
+        let increment = key[indKey % key.length].charCodeAt() - 'A'.charCodeAt();
+        let codeItem = item.charCodeAt();
+        let newItemCode = codeItem + increment;
+        // console.log(item, '=', codeItem, '           ', key[indKey % key.length], '=', increment, '            ',);
+        // console.log(item, '==', newItemCode > 90 ? 'A'.charCodeAt() - 1 + newItemCode % 90 : newItemCode, '\n');
+
+        indKey++;
+        return item = String.fromCodePoint(newItemCode > 90 ? 'A'.charCodeAt() - 1 + newItemCode % 90 : newItemCode);
       }
-    }
+      return item;
+    }).join('')
 
-    return this.direct ? result : result.split('').reverse().join('');
+    return this.direct ? message : message.split('').reverse().join('');
   }
 
   decrypt(encryptedMessage, key) {
-    if (!encryptedMessage || !key) {
-      throw new Error('Incorrect arguments!');
-    }
-
-    encryptedMessage = encryptedMessage.toUpperCase();
+    if (!encryptedMessage || !key) throw new Error('Incorrect arguments!')
     key = key.toUpperCase();
-    let result = '';
-    let keyIndex = 0;
-    let keyLength = key.length;
+    let indKey = 0;
 
-    for (let i = 0; i < encryptedMessage.length; i++) {
-      const char = encryptedMessage[i];
+    encryptedMessage = encryptedMessage.split('').map((item) => {
 
-      if (char >= 'A' && char <= 'Z') {
-        const encryptedCode = char.charCodeAt(0) - 'A'.charCodeAt(0);
-        const keyCode = key[keyIndex % keyLength].charCodeAt(0) - 'A'.charCodeAt(0);
-        const decryptedChar = String.fromCharCode(((encryptedCode - keyCode + 26) % 26) + 'A'.charCodeAt(0));
-        result += decryptedChar;
-        keyIndex++;
-      } else {
-        result += char; // Non-alphabetic characters are added unchanged
+      item = item.toUpperCase();
+      if (item >= 'A' && item <= 'Z') {
+        let increment = key[indKey % key.length].charCodeAt() - 'A'.charCodeAt();
+        let codeItem = item.charCodeAt();
+        let newItemCode = codeItem - increment;
+        // console.log(item, '=', codeItem, '           ', key[indKey % key.length], '=', key[indKey % key.length].charCodeAt(), '         ', 65 - newItemCode);
+        // console.log(item, '==', newItemCode < 65 ? 90 - ('A'.charCodeAt() - newItemCode) + 1 : newItemCode, '\n');
+
+        indKey++;
+        return item = String.fromCodePoint(newItemCode < 65 ? 90 - ('A'.charCodeAt() - newItemCode) + 1 : newItemCode);
       }
-    }
+      return item;
+    }).join('')
 
-    return this.direct ? result : result.split('').reverse().join('');
+
+    return this.direct ? encryptedMessage : encryptedMessage.split('').reverse().join('');
   }
 }
 

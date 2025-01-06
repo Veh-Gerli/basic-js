@@ -8,11 +8,14 @@ const chainMaker = {
   chain: [],
   
   getLength() {
-    return chain.length;
+    return this.chain.length;
   },
   
   addLink(value) {
-   this.chain.push(`(${value})`);
+      if (value == undefined) this.chain.push('( )');
+      else
+         this.chain.push(`(${value})`);
+
    return this;
   },
   
@@ -34,11 +37,12 @@ const chainMaker = {
   },
   
   finishChain() {
-   let strChain = '';
+   let strChain = [];
    for (let i=0; i<this.chain.length; i++) {
-       strChain += (i>0 ? '~~' : '') + this.chain[i];
+       strChain[i]= (i>0 ? '~~' : '') + this.chain[i];
    }
-   return strChain;
+   this.chain = [];
+   return strChain.join('');
   }
 };
 

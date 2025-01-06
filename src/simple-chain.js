@@ -12,13 +12,13 @@ const chainMaker = {
   },
   
   addLink(value) {
-   this.chain.push(`(${value ? value : ' '})`);
+   this.chain.push(`(${value})`);
    return this;
   },
   
   removeLink(position) {
   try {
-      if (position > this.chain.length && position <= 0) throw `You can't remove incorrect link!'`
+      if (typeof position !== 'number' || position > this.chain.length || position <= 0) throw `You can't remove incorrect link!'`
   }
   catch (err) {
       return err;
